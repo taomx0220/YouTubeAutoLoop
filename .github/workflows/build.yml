@@ -1,0 +1,34 @@
+name: Build YouTube Auto Loop 20.21.6
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Theos
+        uses: waruhachi/theos-action@v2.6.3
+
+      - name: Build rootless package
+        run: |
+          make clean package FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless
+
+      - name: Collect artifacts
+        shell: bash
+        run: |
+          set -e
+          mkdir -p out
+          find .theos -type f \( -name '*.dylib' -o -name '*.deb' \) -print -exec cp {} out/ \;
+          find packages -type f -name '*.deb' -print -exec cp {} out/ \; 2>/dev/null || true
+          ls -la out
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: YouTubeAutoLoop20-build
+          path: out/
