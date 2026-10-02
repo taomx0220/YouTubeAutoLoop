@@ -1,0 +1,9 @@
+Package: com.example.youtubeautoloop20
+Name: YouTube Auto Loop 20.21.6
+Version: 1.0.0
+Architecture: iphoneos-arm64
+Description: Automatically enables single-video loop mode in YouTube 20.21.6.
+Maintainer: Local Build
+Author: Local Build
+Section: Tweaks
+Depends: firmware (>= 15.0)
